@@ -1,0 +1,12 @@
+
+/* Class = "UILabel"; text = "Confirm Password："; ObjectID = "5Ta-4a-e3Z"; */
+"5Ta-4a-e3Z.text" = "Confirm Password：";
+
+/* Class = "UILabel"; text = "Password:"; ObjectID = "CYk-pt-PLY"; */
+"CYk-pt-PLY.text" = "Password:";
+
+/* Class = "UILabel"; text = "Account:"; ObjectID = "WOf-b5-LnO"; */
+"WOf-b5-LnO.text" = "Account:";
+
+/* Class = "UIButton"; normalTitle = "Save"; ObjectID = "yaa-8T-Wew"; */
+"yaa-8T-Wew.normalTitle" = "Save";
