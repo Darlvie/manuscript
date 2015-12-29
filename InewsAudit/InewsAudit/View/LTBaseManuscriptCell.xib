@@ -42,17 +42,6 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aZU-ja-Brr">
-                        <rect key="frame" x="138" y="69" width="22" height="22"/>
-                        <animations/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="22" id="NO1-p8-RIi"/>
-                            <constraint firstAttribute="height" constant="22" id="S1T-yv-ie7"/>
-                        </constraints>
-                        <state key="normal">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                    </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XmG-OG-g8L">
                         <rect key="frame" x="182" y="69" width="22" height="22"/>
                         <animations/>
@@ -86,6 +75,17 @@
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <state key="normal" title="审核中">
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aZU-ja-Brr">
+                        <rect key="frame" x="138" y="69" width="22" height="22"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="22" id="NO1-p8-RIi"/>
+                            <constraint firstAttribute="height" constant="22" id="S1T-yv-ie7"/>
+                        </constraints>
+                        <state key="normal">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>

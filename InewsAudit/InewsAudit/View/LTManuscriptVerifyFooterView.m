@@ -27,5 +27,17 @@
     return MVFV;
 }
 
+- (IBAction)noPassButtonAction:(id)sender {
+    if ([self respondsToSelector:@selector(noPassButtonClick:)]) {
+        [self.delegate noPassButtonClick:sender];
+    }
+}
+
+- (IBAction)passButtonAction:(id)sender {
+    if ([self respondsToSelector:@selector(passButtonDidClick:)]) {
+        [self.delegate passButtonDidClick:sender];
+    }
+}
+
 
 @end

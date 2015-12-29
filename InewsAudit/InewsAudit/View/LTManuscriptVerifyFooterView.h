@@ -8,10 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol  LTManuscriptVerifyFooterViewDelegate <NSObject>
+
+- (void)passButtonDidClick:(id)sender;
+- (void)noPassButtonClick:(id)sender;
+
+@end
+
 @interface LTManuscriptVerifyFooterView : UIView
 @property (weak, nonatomic) IBOutlet UIButton *noPassButton;
 @property (weak, nonatomic) IBOutlet UIButton *passButton;
-
+@property (nonatomic,assign) id<LTManuscriptVerifyFooterViewDelegate> delegate;
 
 + (instancetype)manuscriptVerifyFooterView;
 @end
