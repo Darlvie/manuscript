@@ -12,6 +12,7 @@
 #import "LTManuscriptVerifyFooterView.h"
 #import "LTFailPassFooterView.h"
 #import "LTPassedFooterView.h"
+#import "LTManuscriptItem.h"
 
 @interface LTManuscriptDetailViewController () <UITableViewDelegate,UITableViewDataSource>
 
@@ -41,7 +42,7 @@
 - (id)footerView {
     
     if (!_footerView) {
-        switch (self.manuscript.state) {
+        switch (self.manuscriptItem.state) {
             case ManuscriptStateEntering:
             case ManuscriptStatePassed:
             {
@@ -146,7 +147,7 @@
         {
             UILabel *headLineLabel = [[UILabel alloc] init];
             headLineLabel.frame = CGRectMake(10, 5, SCREEN_WIDTH - 15, 60);
-            headLineLabel.text = self.manuscript.title;
+            headLineLabel.text = self.manuscriptItem.title;
             headLineLabel.numberOfLines = 0;
             headLineLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
             [cell.contentView addSubview:headLineLabel];

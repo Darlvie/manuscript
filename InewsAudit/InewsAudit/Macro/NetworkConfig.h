@@ -10,21 +10,21 @@
 #define NetworkConfig_h
 
 //用户登录请求api
-#define kLoginUrl @"http://ipaddress:portNumber/tms/api/userApi!login.action"
+#define kLoginUrl @"http://10.255.20.60/cm/uServices!login.action"
 //待审核稿件列表请求api
-#define kGetCheckManuscriptList @"http://ipaddress:portNumber/tmc/api/manuscriptApi!getCheckManuscriptList.action"
+#define kGetCheckManuscriptList @"http://10.255.20.60/cm/manuscriptApi!getCheckManuscriptList.action"
 //稿件单个实例请求api
-#define kGetManuscript @"http://ipaddress:portNumber/api/manuscriptApi!getManuscript.action"
+#define kGetManuscript @"http://10.255.20.60/cm/manuscriptApi!getManuscript.action"
 //修改稿件信息请求api
-#define kGetManuscriptUpdate @"http://ipaddress:portNumber/api/manuscriptApi!getManuscriptUpdate.action"
+#define kGetManuscriptUpdate @"http://10.255.20.60/cm/manuscriptApi!getManuscriptUpdate.action"
 //稿件审核请求api
-#define kGetCheckManuscript @"http://ipaddress:portNumber/tmc/api/!getCheckManuscript.action"
+#define kGetCheckManuscript @"http://10.255.20.60/cm/manuscriptApi!getCheckManuscript.action"
 //我的审核记录请求api
-#define kGetAuditTask @"http://ipaddress:portNumber/tmc/ap/auditTasktApi!getAuditTask.action"
+//#define kGetAuditTask @"http://10.255.20.60/cm/auditTaskApi!getAuditTask.action"
 //我的任务请求api
-#define kGetAuditTask @"http://ipaddress:portNumber/tmc/api/auditTasktApi!getAuditTask.action"
+#define kGetAuditTask @"http://10.255.20.60/cm/auditTaskApi!getAuditTask.action"
 //获取稿件附件请求api
-#define kGetManuscriptAttachmeny @"http://ipaddress:portNumber/tms/api/attachmentApi!getAttaByManuId.action"
+#define kGetManuscriptAttachmeny @"http://10.255.20.60/cm/attachmentApi!getAttaByManuId"
 
 
 

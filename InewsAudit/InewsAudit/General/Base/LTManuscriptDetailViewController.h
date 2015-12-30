@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 
 
-@class LTManuscript;
+@class LTManuscriptItem;
 @interface LTManuscriptDetailViewController : UIViewController
 
-@property(nonatomic,strong) LTManuscript *manuscript;
+@property(nonatomic,strong) LTManuscriptItem *manuscriptItem;
 @end

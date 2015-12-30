@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1BC35C1B1C337E19009EF7AB /* LTManuscriptItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC35C1A1C337E19009EF7AB /* LTManuscriptItem.m */; };
+		1BC35C1E1C3381FF009EF7AB /* LTManuscriptTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC35C1D1C3381FF009EF7AB /* LTManuscriptTool.m */; };
 		27DDC4B41C322BBE001413EE /* LTAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DDC4B11C322BBE001413EE /* LTAccount.m */; };
 		27DDC4B51C322BBE001413EE /* LTManuscript.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DDC4B31C322BBE001413EE /* LTManuscript.m */; };
 		27DDC4CD1C322CF0001413EE /* LTLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DDC4B91C322CF0001413EE /* LTLoginViewController.m */; };
@@ -30,7 +32,7 @@
 		27DDC5081C322D7B001413EE /* LTManuscriptVerifyFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DDC4F71C322D7B001413EE /* LTManuscriptVerifyFooterView.m */; };
 		27DDC5091C322D7B001413EE /* LTPassedFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DDC4F91C322D7B001413EE /* LTPassedFooterView.m */; };
 		27DDC50B1C322E27001413EE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27DDC50A1C322E27001413EE /* Main.storyboard */; };
-		27DDC50E1C323569001413EE /* LTManuscriptModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DDC50D1C323569001413EE /* LTManuscriptModel.m */; };
+		27DDC50E1C323569001413EE /* LTManuscriptDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DDC50D1C323569001413EE /* LTManuscriptDetail.m */; };
 		27DDC5121C3257B2001413EE /* NSString+LT.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DDC5111C3257B2001413EE /* NSString+LT.m */; };
 		27DDC5201C325C93001413EE /* LTAccountTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DDC5151C325C93001413EE /* LTAccountTool.m */; };
 		27DDC5211C325C93001413EE /* LTNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DDC5171C325C93001413EE /* LTNavigationController.m */; };
@@ -42,9 +44,6 @@
 		27F75C711C30E6DF006063D7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27F75C2F1C30E6DF006063D7 /* Images.xcassets */; };
 		27F75C721C30E6DF006063D7 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 27F75C301C30E6DF006063D7 /* Info.plist */; };
 		27F75C731C30E6DF006063D7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F75C331C30E6DF006063D7 /* main.m */; };
-		27F75C741C30E6DF006063D7 /* manuscriptList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 27F75C341C30E6DF006063D7 /* manuscriptList.plist */; };
-		27F75C751C30E6DF006063D7 /* manuscriptReview.plist in Resources */ = {isa = PBXBuildFile; fileRef = 27F75C351C30E6DF006063D7 /* manuscriptReview.plist */; };
-		27F75C781C30E6DF006063D7 /* myTasks.plist in Resources */ = {isa = PBXBuildFile; fileRef = 27F75C3B1C30E6DF006063D7 /* myTasks.plist */; };
 		27F75C881C30E6E9006063D7 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 27F75C861C30E6E9006063D7 /* Info.plist */; };
 		B55FDC9EAF7953CB318C42C0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 71616E5A830988E6ED05CCB6 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -60,6 +59,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1BC35C181C327158009EF7AB /* AppMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppMacro.h; sourceTree = "<group>"; };
+		1BC35C191C337E19009EF7AB /* LTManuscriptItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTManuscriptItem.h; sourceTree = "<group>"; };
+		1BC35C1A1C337E19009EF7AB /* LTManuscriptItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTManuscriptItem.m; sourceTree = "<group>"; };
+		1BC35C1C1C3381FF009EF7AB /* LTManuscriptTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTManuscriptTool.h; sourceTree = "<group>"; };
+		1BC35C1D1C3381FF009EF7AB /* LTManuscriptTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTManuscriptTool.m; sourceTree = "<group>"; };
 		277100201BE73AC400B6E7AE /* InewsAudit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InewsAudit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		277100391BE73AC400B6E7AE /* InewsAudit.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InewsAudit.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		27DDC4B01C322BBE001413EE /* LTAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTAccount.h; sourceTree = "<group>"; };
@@ -100,8 +104,8 @@
 		27DDC4F81C322D7B001413EE /* LTPassedFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTPassedFooterView.h; sourceTree = "<group>"; };
 		27DDC4F91C322D7B001413EE /* LTPassedFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTPassedFooterView.m; sourceTree = "<group>"; };
 		27DDC50A1C322E27001413EE /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		27DDC50C1C323569001413EE /* LTManuscriptModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTManuscriptModel.h; sourceTree = "<group>"; };
-		27DDC50D1C323569001413EE /* LTManuscriptModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTManuscriptModel.m; sourceTree = "<group>"; };
+		27DDC50C1C323569001413EE /* LTManuscriptDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTManuscriptDetail.h; sourceTree = "<group>"; };
+		27DDC50D1C323569001413EE /* LTManuscriptDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTManuscriptDetail.m; sourceTree = "<group>"; };
 		27DDC5101C3257B2001413EE /* NSString+LT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+LT.h"; sourceTree = "<group>"; };
 		27DDC5111C3257B2001413EE /* NSString+LT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+LT.m"; sourceTree = "<group>"; };
 		27DDC5141C325C93001413EE /* LTAccountTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTAccountTool.h; sourceTree = "<group>"; };
@@ -123,9 +127,6 @@
 		27F75C301C30E6DF006063D7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		27F75C321C30E6DF006063D7 /* Public.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Public.h; sourceTree = "<group>"; };
 		27F75C331C30E6DF006063D7 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		27F75C341C30E6DF006063D7 /* manuscriptList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = manuscriptList.plist; sourceTree = "<group>"; };
-		27F75C351C30E6DF006063D7 /* manuscriptReview.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = manuscriptReview.plist; sourceTree = "<group>"; };
-		27F75C3B1C30E6DF006063D7 /* myTasks.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = myTasks.plist; sourceTree = "<group>"; };
 		27F75C3C1C30E6DF006063D7 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		27F75C851C30E6E9006063D7 /* ______Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "______Tests.m"; sourceTree = "<group>"; };
 		27F75C861C30E6E9006063D7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -181,8 +182,10 @@
 				27DDC4B11C322BBE001413EE /* LTAccount.m */,
 				27DDC4B21C322BBE001413EE /* LTManuscript.h */,
 				27DDC4B31C322BBE001413EE /* LTManuscript.m */,
-				27DDC50C1C323569001413EE /* LTManuscriptModel.h */,
-				27DDC50D1C323569001413EE /* LTManuscriptModel.m */,
+				27DDC50C1C323569001413EE /* LTManuscriptDetail.h */,
+				27DDC50D1C323569001413EE /* LTManuscriptDetail.m */,
+				1BC35C191C337E19009EF7AB /* LTManuscriptItem.h */,
+				1BC35C1A1C337E19009EF7AB /* LTManuscriptItem.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -316,6 +319,8 @@
 				27DDC51D1C325C93001413EE /* LTTabBarItem.m */,
 				27DDC51E1C325C93001413EE /* LTUnderlineTextField.h */,
 				27DDC51F1C325C93001413EE /* LTUnderlineTextField.m */,
+				1BC35C1C1C3381FF009EF7AB /* LTManuscriptTool.h */,
+				1BC35C1D1C3381FF009EF7AB /* LTManuscriptTool.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -346,6 +351,7 @@
 			children = (
 				27F75C321C30E6DF006063D7 /* Public.h */,
 				27DDC5261C325F18001413EE /* NetworkConfig.h */,
+				1BC35C181C327158009EF7AB /* AppMacro.h */,
 			);
 			path = Macro;
 			sourceTree = "<group>";
@@ -366,9 +372,6 @@
 				27DDC50A1C322E27001413EE /* Main.storyboard */,
 				27F75C301C30E6DF006063D7 /* Info.plist */,
 				27F75C331C30E6DF006063D7 /* main.m */,
-				27F75C341C30E6DF006063D7 /* manuscriptList.plist */,
-				27F75C351C30E6DF006063D7 /* manuscriptReview.plist */,
-				27F75C3B1C30E6DF006063D7 /* myTasks.plist */,
 				27F75C3C1C30E6DF006063D7 /* PrefixHeader.pch */,
 			);
 			name = "Supporting Files";
@@ -444,7 +447,7 @@
 				TargetAttributes = {
 					2771001F1BE73AC400B6E7AE = {
 						CreatedOnToolsVersion = 6.3;
-						DevelopmentTeam = X9594DCYB5;
+						DevelopmentTeam = ZDM7VCT9E7;
 					};
 					277100381BE73AC400B6E7AE = {
 						CreatedOnToolsVersion = 6.3;
@@ -479,14 +482,11 @@
 			files = (
 				27DDC5021C322D7B001413EE /* LTFailPassFooterView.xib in Resources */,
 				27F75C711C30E6DF006063D7 /* Images.xcassets in Resources */,
-				27F75C781C30E6DF006063D7 /* myTasks.plist in Resources */,
 				27DDC4CE1C322CF0001413EE /* LTLoginViewController.xib in Resources */,
 				27DDC5031C322D7B001413EE /* LTManuscriptVerifyFooterView.xib in Resources */,
-				27F75C741C30E6DF006063D7 /* manuscriptList.plist in Resources */,
 				27DDC4D51C322CF0001413EE /* LTModifyAccountController.xib in Resources */,
 				27DDC50B1C322E27001413EE /* Main.storyboard in Resources */,
 				27DDC5041C322D7B001413EE /* LTPassedFooterView.xib in Resources */,
-				27F75C751C30E6DF006063D7 /* manuscriptReview.plist in Resources */,
 				27DDC5061C322D7B001413EE /* LTBaseManuscriptCell.xib in Resources */,
 				27F75C721C30E6DF006063D7 /* Info.plist in Resources */,
 				27DDC4D31C322CF0001413EE /* LTColorPickerController.xib in Resources */,
@@ -565,7 +565,7 @@
 				27DDC5051C322D7B001413EE /* LTBaseManuscriptCell.m in Sources */,
 				27DDC4D61C322CF0001413EE /* LTSettingViewController.m in Sources */,
 				27F75C731C30E6DF006063D7 /* main.m in Sources */,
-				27DDC50E1C323569001413EE /* LTManuscriptModel.m in Sources */,
+				27DDC50E1C323569001413EE /* LTManuscriptDetail.m in Sources */,
 				27DDC5241C325C93001413EE /* LTTabBarItem.m in Sources */,
 				27DDC4D21C322CF0001413EE /* LTColorPickerController.m in Sources */,
 				27DDC4CF1C322CF0001413EE /* LTManuscriptAuditController.m in Sources */,
@@ -576,6 +576,8 @@
 				27DDC5201C325C93001413EE /* LTAccountTool.m in Sources */,
 				27DDC5121C3257B2001413EE /* NSString+LT.m in Sources */,
 				27DDC4FA1C322D7B001413EE /* LTBaseManuscriptController.m in Sources */,
+				1BC35C1E1C3381FF009EF7AB /* LTManuscriptTool.m in Sources */,
+				1BC35C1B1C337E19009EF7AB /* LTManuscriptItem.m in Sources */,
 				27DDC4D11C322CF0001413EE /* LTMyTaskController.m in Sources */,
 				27DDC4FB1C322D7B001413EE /* LTManuscriptDetailViewController.m in Sources */,
 				27DDC4B41C322BBE001413EE /* LTAccount.m in Sources */,

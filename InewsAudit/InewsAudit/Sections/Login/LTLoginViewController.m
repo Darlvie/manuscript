@@ -13,6 +13,9 @@
 #import "LTAccountTool.h"
 #import "LTTabBarController.h"
 #import "AppDelegate.h"
+#import "NSString+LT.h"
+#import "UIView+Toast.h"
+#import "AFNetworking.h"
 
 @interface LTLoginViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIView *headerView;
@@ -47,8 +50,14 @@
         self.userNameTextField.text = self.account.userName;
     }
     
-    [NOTIFICATION_CENTER addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [NOTIFICATION_CENTER addObserver:self selector:@selector(keyboardWillHiden:) name:UIKeyboardWillHideNotification object:nil];
+    [NOTIFICATION_CENTER addObserver:self
+                            selector:@selector(keyboardWillShow:)
+                                name:UIKeyboardWillShowNotification
+                              object:nil];
+    [NOTIFICATION_CENTER addObserver:self
+                            selector:@selector(keyboardWillHiden:)
+                                name:UIKeyboardWillHideNotification
+                              object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -60,7 +69,8 @@
 - (void)setupInputView {
     //用户名输入框
     _userNameTextField = [[LTUnderlineTextField alloc]init];
-    _userNameTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"用户名" attributes:@{NSForegroundColorAttributeName:[UIColor lightGrayColor]}];
+    _userNameTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"用户名"
+                                                                               attributes:@{NSForegroundColorAttributeName:[UIColor lightGrayColor]}];
     _userNameTextField.delegate = self;
     _userNameTextField.returnKeyType = UIReturnKeyNext;
     _userNameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -68,7 +78,8 @@
     
     //密码输入框
     _passwordTextField = [[LTUnderlineTextField alloc]init];
-    _passwordTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"密码" attributes:@{NSForegroundColorAttributeName:[UIColor lightGrayColor]}];
+    _passwordTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"密码"
+                                                                               attributes:@{NSForegroundColorAttributeName:[UIColor lightGrayColor]}];
     _passwordTextField.delegate = self;
     _passwordTextField.returnKeyType = UIReturnKeyDone;
     _passwordTextField.secureTextEntry = YES;
@@ -82,7 +93,9 @@
     [_loginButton setBackgroundColor:RGB(112, 140, 26)];
     _loginButton.layer.cornerRadius = 5;
     _loginButton.layer.masksToBounds = YES;
-    [_loginButton addTarget:self action:@selector(loginButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [_loginButton addTarget:self
+                     action:@selector(loginButtonClick)
+           forControlEvents:UIControlEventTouchUpInside];
     [_inputView addSubview:_loginButton];
     
 }
@@ -107,50 +120,61 @@
 - (void)loginButtonClick {
 
     if ([self.userNameTextField.text isEqualToString:@""] || [self.passwordTextField.text isEqualToString:@""]) {
-        [SVProgressHUD showErrorWithStatus: @"用户名或密码不能为空"
-                                  maskType:SVProgressHUDMaskTypeBlack];
-    } else if (self.account) { //账户存在
-       if ([self.userNameTextField.text isEqualToString:self.account.userName] && [self.passwordTextField.text isEqualToString:self.account.password]) {
-            [SVProgressHUD showSuccessWithStatus:@"登录成功"
-                                        maskType:SVProgressHUDMaskTypeBlack];
-            
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                LTAccount *account = [[LTAccount alloc]init];
-                account.userName = self.userNameTextField.text;
-                account.password = self.passwordTextField.text;
-                account.autoLogin = YES;
-                [LTAccountTool saveAccount:account];
-            });
-            
-            LTTabBarController *tabBar = [[LTTabBarController alloc]init];
-            [self presentViewController:tabBar animated:YES completion:nil];
-            
-        } else {
-            [SVProgressHUD showErrorWithStatus:@"用户名或密码错误"
-                                      maskType:SVProgressHUDMaskTypeBlack] ;
-        }
+        
+        [self.view makeToast:@"用户名或密码不能为空" duration:2.0 position:CSToastPositionCenter];
+        
+    } else {
+        
+        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+        AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithSessionConfiguration:configuration];
+        manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        
+        NSString *username = self.userNameTextField.text;
+        NSString *password = [self.passwordTextField.text MD5String];
+        
+        NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+        parameter[@"loginname"] = username;
+        parameter[@"loginpswd"] = password;
+        
+        [SVProgressHUD show];
+        
+        __weak typeof(self) weakSelf = self;
+        NSURLSessionDataTask *dataTask = [manager POST:kLoginUrl parameters:parameter constructingBodyWithBlock:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            [SVProgressHUD dismiss];
 
-    } else { //账户不存在，使用默认用户名和密码
-        if ([self.userNameTextField.text isEqualToString:@"test"] && [self.passwordTextField.text isEqualToString:@"123456"]) {
-            [SVProgressHUD showSuccessWithStatus:@"登录成功"
-                                        maskType:SVProgressHUDMaskTypeBlack];
+            NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+            NSString *token = [result substringFromIndex:3];
+            if (token && [token length] == 36) {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    LTAccount *account = [[LTAccount alloc]init];
+                    account.userName = self.userNameTextField.text;
+                    account.password = self.passwordTextField.text;
+                    account.autoLogin = YES;
+                    [LTAccountTool saveAccount:account];
+                    
+                    [USERDEFAULT setObject:token forKey:MANUSCRIPT_TOKEN];
+                    [USERDEFAULT synchronize];
+                });
+                LTTabBarController *tabBar = [[LTTabBarController alloc]init];
+                [self presentViewController:tabBar animated:YES completion:nil];
+            } else {
+                [weakSelf.view makeToast:token duration:2.0 position:CSToastPositionCenter];
+            }
             
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                LTAccount *account = [[LTAccount alloc]init];
-                account.userName = self.userNameTextField.text;
-                account.password = self.passwordTextField.text;
-                account.autoLogin = YES;
-                [LTAccountTool saveAccount:account];
-            });
             
-            LTTabBarController *tabBar = [[LTTabBarController alloc]init];
-            [self presentViewController:tabBar animated:YES completion:nil];
-            
-        } else {
-            [SVProgressHUD showErrorWithStatus: @"用户或密码错误"
-                                      maskType:SVProgressHUDMaskTypeBlack] ;
-        }
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            [SVProgressHUD dismiss];
+            if (error) {
+                NSLog(@"%@",error.localizedDescription);
+                [weakSelf.view makeToast:error.localizedDescription
+                                duration:2.0
+                                position:CSToastPositionCenter];
+            }
+        }];
 
+        [dataTask resume];
+        
     }
     
 }
@@ -159,6 +183,7 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField == self.userNameTextField) {
         [self.userNameTextField resignFirstResponder];
+        [self.passwordTextField becomeFirstResponder];
     } else {
         [self.view endEditing:YES];
     }

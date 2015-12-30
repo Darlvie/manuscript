@@ -9,12 +9,15 @@
 #import "LTBaseManuscriptCell.h"
 #import "LTManuscript.h"
 #import "AppDelegate.h"
+#import "LTManuscriptItem.h"
+
 
 @interface LTBaseManuscriptCell ()
 @property (weak, nonatomic) IBOutlet UIButton *firstTypeButton;
 @property (weak, nonatomic) IBOutlet UIButton *secondTypeButton;
 @property (weak, nonatomic) IBOutlet UIButton *thirdTypeButton;
 @property (weak, nonatomic) IBOutlet UIButton *fourthTypeButton;
+
 
 @end
 @implementation LTBaseManuscriptCell
@@ -25,9 +28,14 @@
     self.stateButton.layer.masksToBounds = YES;
     AppDelegate *app = APPDELEGATE;
     [self.stateButton setBackgroundColor:app.tintColor];
+
     
-    [NOTIFICATION_CENTER addObserver:self selector:@selector(tintColorDidChange:) name:TINTCOLOR_DID_CHANGED object:nil];
+    [NOTIFICATION_CENTER addObserver:self
+                            selector:@selector(tintColorDidChange:)
+                                name:TINTCOLOR_DID_CHANGED
+                              object:nil];
    
+    
 }
 
 - (void)tintColorDidChange:(NSNotification *)noti {
@@ -41,8 +49,49 @@
     // Configure the view for the selected state
 }
 
+- (void)setManuscriptItem:(LTManuscriptItem *)manuscriptItem {
+    _manuscriptItem = manuscriptItem;
+    //标题
+    if ([manuscriptItem.title length]) {
+        _headlineLabel.text = manuscriptItem.title;
+    } else {
+        _headlineLabel.text = @"无标题";
+    }
+    
+    
+    //状态标签
+    NSString *statusStr = nil;
+    if ([manuscriptItem.status length]) {
+        if ([manuscriptItem.status isEqualToString:@"AVAILABLE"]) {
+            statusStr = @"可 用";
+        } else if ([manuscriptItem.status isEqualToString:@"APPROVING"]) {
+            statusStr = @"审批中";
+        } else if ([manuscriptItem.status isEqualToString:@"INSTORAGE"]) {
+            statusStr = @"入 库";
+        } else if ([manuscriptItem.status isEqualToString:@"CREATE"]) {
+            statusStr = @"转码中";
+        } else if ([manuscriptItem.status isEqualToString:@"DISCARD"]) {
+            statusStr = @"废 弃";
+        } else if ([manuscriptItem.status isEqualToString:@"MOVE"]) {
+            statusStr = @"待 签";
+        } else if([manuscriptItem.status isEqualToString:@"COMPLETE"]){
+            statusStr = @"已完成";
+        } else if ([manuscriptItem.status isEqualToString:@"TOBE"]) {
+            statusStr = @"未完成";
+        } else {
+            statusStr = manuscriptItem.status;
+        }
+        [_stateButton setTitle:statusStr forState:UIControlStateNormal];
+
+    }
+    
+    //稿件类型图标
+    [_firstTypeButton setImage:[UIImage imageNamed:@"atta_txt"] forState:UIControlStateNormal];
+    [_secondTypeButton setImage:[UIImage imageNamed:@"atta_photos"] forState:UIControlStateNormal];
+
+}
+
 - (void)setManuscript:(LTManuscript *)manuscript {
-    _manuscript = manuscript;
     
     //标题
     _headlineLabel.text = manuscript.title;

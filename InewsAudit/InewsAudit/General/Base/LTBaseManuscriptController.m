@@ -10,36 +10,34 @@
 #import "LTSettingViewController.h"
 #import "LTBaseManuscriptCell.h"
 #import "LTManuscriptDetailViewController.h"
-#import "LTManuscript.h"
+#import "LTManuscriptItem.h"
+#import "MJRefresh.h"
 
 @interface LTBaseManuscriptController ()
-@property (nonatomic,strong) NSArray *manuscriptArray;
+
 @end
 
 @implementation LTBaseManuscriptController
 
 static NSString * const reuseIdentifier = @"baseManuscriptCell";
 
-- (NSArray *)manuscriptArray {
-    if (!_manuscriptArray) {
-        __block NSArray *array = [NSArray array];        
-        [self baseManuscriptWithArray:^(NSArray *manuscriptArray) {
-            array = manuscriptArray;
-        }];
+- (void)setManuscriptArray:(NSMutableArray *)manuscriptArray {
+    _manuscriptArray = manuscriptArray;
+    
+    if (manuscriptArray.count >= 20) {
+        self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self
+                                                                        refreshingAction:@selector(footerRefreshAction)];
         
-        NSMutableArray *arrayM = [NSMutableArray array];
-        for (NSDictionary *dict in array) {
-            LTManuscript *manuscript = [LTManuscript manuscriptWithDict:dict];
-            [arrayM addObject:manuscript];
-        }
-        _manuscriptArray = arrayM;
+    } else {
+        self.tableView.mj_footer = nil;
     }
-    return _manuscriptArray;
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.manuscriptArray = [NSMutableArray array];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"setting"]
                                                                               style:UIBarButtonItemStyleDone
@@ -53,6 +51,12 @@ static NSString * const reuseIdentifier = @"baseManuscriptCell";
     [self.tableView registerNib:[UINib nibWithNibName:@"LTBaseManuscriptCell" bundle:nil] forCellReuseIdentifier:reuseIdentifier];
     
     self.tableView.rowHeight = 100;
+    
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self
+                                                                refreshingAction:@selector(headRefreshAction)];
+
+    
+    
 }
 
 
@@ -82,23 +86,41 @@ static NSString * const reuseIdentifier = @"baseManuscriptCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LTBaseManuscriptCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
-    LTManuscript *manuscript = self.manuscriptArray[indexPath.row];
-    cell.manuscript = manuscript;
+    LTManuscriptItem *item = self.manuscriptArray[indexPath.row];
+    cell.manuscriptItem = item;
+//    NSLog(@"type: %@",item.type);
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    LTManuscript *manuscript = self.manuscriptArray[indexPath.row];
-    LTManuscriptDetailViewController *manuscriptDetailVC = [[LTManuscriptDetailViewController alloc] init];
-    manuscriptDetailVC.manuscript = manuscript;
-    [self.navigationController pushViewController:manuscriptDetailVC animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - Action
+- (void)headRefreshAction {
+   
+    [self.tableView.mj_header beginRefreshing];
+    [self refreshDataSource];
+    [self.tableView.mj_header endRefreshing];
+   
+}
+
+- (void)footerRefreshAction {
+
+    [self.tableView.mj_footer beginRefreshing];
+    [self loadMoreData];
+    [self.tableView.mj_footer endRefreshing];
+    
 }
 
 
+- (void)refreshDataSource  {
+    
+}
 
-
-
-
+- (void)loadMoreData {
+    
+}
 
 @end

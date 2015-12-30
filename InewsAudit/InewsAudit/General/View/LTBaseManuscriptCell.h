@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class LTManuscript;
+@class LTManuscriptItem;
 @interface LTBaseManuscriptCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *thumbImageView;
 @property (weak, nonatomic) IBOutlet UILabel *headlineLabel;
 @property (weak, nonatomic) IBOutlet UIButton *stateButton;
 
-@property (nonatomic,strong) LTManuscript *manuscript;
+@property (nonatomic,strong) LTManuscriptItem *manuscriptItem;
 @end

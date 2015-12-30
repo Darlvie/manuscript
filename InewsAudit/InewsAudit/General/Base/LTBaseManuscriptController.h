@@ -11,7 +11,11 @@
 //定义block
 typedef void(^ManuscriptBlock)(NSArray *manuscriptArray);
 @interface LTBaseManuscriptController : UITableViewController
+@property (nonatomic,copy) NSString *token;
+@property (nonatomic,copy) NSMutableArray *manuscriptArray;
 
-//定义block回调函数，由子类实现
-- (void)baseManuscriptWithArray:(ManuscriptBlock)manuscriptBlock;
+- (void)refreshDataSource;
+
+- (void)loadMoreData;
+
 @end
