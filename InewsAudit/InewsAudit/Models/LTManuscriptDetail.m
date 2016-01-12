@@ -11,9 +11,9 @@
 
 @implementation LTManuscriptDetail
 
-
-+ (instancetype)manuscriptWithDict:(NSDictionary *)dict {
++ (instancetype)manuscriptDetailWithDict:(NSDictionary *)dict {
     return [LTManuscriptDetail objectWithKeyValues:dict];
 }
+
 
 @end

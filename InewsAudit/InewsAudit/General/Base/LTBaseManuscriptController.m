@@ -12,8 +12,12 @@
 #import "LTManuscriptDetailViewController.h"
 #import "LTManuscriptItem.h"
 #import "MJRefresh.h"
+#import "LTManuscriptListController.h"
+#import "LTNetworkingHelper.h"
+#import "LTMyTaskController.h"
 
 @interface LTBaseManuscriptController ()
+
 
 @end
 
@@ -27,7 +31,6 @@ static NSString * const reuseIdentifier = @"baseManuscriptCell";
     if (manuscriptArray.count >= 20) {
         self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self
                                                                         refreshingAction:@selector(footerRefreshAction)];
-        
     } else {
         self.tableView.mj_footer = nil;
     }
@@ -39,6 +42,7 @@ static NSString * const reuseIdentifier = @"baseManuscriptCell";
     
     self.manuscriptArray = [NSMutableArray array];
     
+    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"setting"]
                                                                               style:UIBarButtonItemStyleDone
                                                                              target:self
@@ -46,6 +50,21 @@ static NSString * const reuseIdentifier = @"baseManuscriptCell";
     [self.tableView setBackgroundColor:RGB(236, 236, 236)];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     
+    NSShadow *noDataShadow = [[NSShadow alloc] init];
+    noDataShadow.shadowColor = RGBA(0, 0, 0, 0.8);
+    noDataShadow.shadowOffset = CGSizeMake(0, 1);
+    NSAttributedString *attStr = [[NSAttributedString alloc] initWithString:@"没有更多数据!"
+                                                                 attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,noDataShadow,NSShadowAttributeName,nil]];
+    
+    self.noDataLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    CGRect rect = CGRectZero;
+    rect.size = CGSizeMake(320, 64);
+    self.noDataLabel.frame = rect;
+    self.noDataLabel.center = self.view.center;
+    self.noDataLabel.backgroundColor = [UIColor clearColor];
+    [self.noDataLabel setTextAlignment:NSTextAlignmentCenter];
+    self.noDataLabel.attributedText = attStr;
+    self.tableView.tableHeaderView = self.noDataLabel;
     
     //注册cell
     [self.tableView registerNib:[UINib nibWithNibName:@"LTBaseManuscriptCell" bundle:nil] forCellReuseIdentifier:reuseIdentifier];
@@ -54,9 +73,7 @@ static NSString * const reuseIdentifier = @"baseManuscriptCell";
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self
                                                                 refreshingAction:@selector(headRefreshAction)];
-
-    
-    
+  
 }
 
 
@@ -95,6 +112,24 @@ static NSString * const reuseIdentifier = @"baseManuscriptCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    LTManuscriptItem *item = self.manuscriptArray[indexPath.row];
+    LTManuscriptDetailViewController *detailVC = [[LTManuscriptDetailViewController alloc] init];
+    detailVC.manuscriptItem = item;
+    
+    //[detailVC getManuscriptWithManuscriptId:item.manuscriptId];
+    if ([self isKindOfClass:[LTManuscriptListController class]]) {
+        LTNetworkingHelper *helper = [LTNetworkingHelper sharedManager];
+        [helper updateManuscriptStateWithToken:[USERDEFAULT objectForKey:MANUSCRIPT_TOKEN]
+                                        status:@"LOCKED"
+                                        taskId:item.taskId];
+        detailVC.showUnlockedItem = NO;
+    } else if ([self isKindOfClass:[LTMyTaskController class]]){
+        detailVC.showUnlockedItem = YES;
+    } else {
+        detailVC.showUnlockedItem = NO;
+    }
+    
+    [self.navigationController pushViewController:detailVC animated:YES];
 }
 
 #pragma mark - Action

@@ -11,6 +11,7 @@
 #import "LTAccount.h"
 #import "LTAccountTool.h"
 #import "LTLoginViewController.h"
+#import "LTNetworkingHelper.h"
 
 @interface AppDelegate ()
 
@@ -31,13 +32,11 @@
         self.tintColor = RGB(112, 140, 26);
     }
   
-    LTAccount *account = [LTAccountTool account];
+    LTNetworkingHelper  *netHelper = [LTNetworkingHelper sharedManager];
+    [netHelper startCheckingNetwork];
 
-    if (account.isAutoLogin) {
-        self.window.rootViewController = [[LTTabBarController alloc]init];
-    } else {
-        self.window.rootViewController = [[LTLoginViewController alloc] initWithNibName:@"LTLoginViewController" bundle:nil];
-    }
+    self.window.rootViewController = [[LTLoginViewController alloc] initWithNibName:@"LTLoginViewController" bundle:nil];
+    
     [self.window makeKeyAndVisible];
     
     [NOTIFICATION_CENTER addObserver:self selector:@selector(tintColorDidChange:) name:TINTCOLOR_DID_CHANGED object:nil];

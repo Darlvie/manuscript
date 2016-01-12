@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-//定义block
-typedef void(^ManuscriptBlock)(NSArray *manuscriptArray);
 @interface LTBaseManuscriptController : UITableViewController
+
 @property (nonatomic,copy) NSString *token;
 @property (nonatomic,copy) NSMutableArray *manuscriptArray;
+@property (nonatomic,strong) UILabel *noDataLabel;
 
 - (void)refreshDataSource;
 

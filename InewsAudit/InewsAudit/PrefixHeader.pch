@@ -15,5 +15,6 @@
 #import "Public.h"
 #import "NetworkConfig.h"
 #import "AppMacro.h"
+#import "NotiMacro.h"
 
 #endif

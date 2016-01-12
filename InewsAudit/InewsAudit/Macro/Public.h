@@ -38,7 +38,7 @@
 
 
 #define USERDEFAULT         [NSUserDefaults standardUserDefaults]
-#define NOTIFICATION_CENTER [NSNotificationCenter defaultCenter]
+
 #define APPDELEGATE         [UIApplication sharedApplication].delegate
 
 #endif

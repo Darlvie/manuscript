@@ -7,7 +7,6 @@
 //
 
 #import "LTBaseManuscriptCell.h"
-#import "LTManuscript.h"
 #import "AppDelegate.h"
 #import "LTManuscriptItem.h"
 
@@ -62,27 +61,39 @@
     //状态标签
     NSString *statusStr = nil;
     if ([manuscriptItem.status length]) {
-        if ([manuscriptItem.status isEqualToString:@"AVAILABLE"]) {
-            statusStr = @"可 用";
-        } else if ([manuscriptItem.status isEqualToString:@"APPROVING"]) {
-            statusStr = @"审批中";
-        } else if ([manuscriptItem.status isEqualToString:@"INSTORAGE"]) {
-            statusStr = @"入 库";
-        } else if ([manuscriptItem.status isEqualToString:@"CREATE"]) {
-            statusStr = @"转码中";
-        } else if ([manuscriptItem.status isEqualToString:@"DISCARD"]) {
-            statusStr = @"废 弃";
-        } else if ([manuscriptItem.status isEqualToString:@"MOVE"]) {
-            statusStr = @"待 签";
-        } else if([manuscriptItem.status isEqualToString:@"COMPLETE"]){
-            statusStr = @"已完成";
-        } else if ([manuscriptItem.status isEqualToString:@"TOBE"]) {
-            statusStr = @"未完成";
+        if ([manuscriptItem.status isEqualToString:@"COMPLETE"]) {
+            if ([manuscriptItem.md[@"status"] isEqualToString:@"MOVE"]) {
+                statusStr = @"通 过";
+            } else if ([manuscriptItem.md[@"status"] isEqualToString:@"DISCARD"]) {
+                statusStr = @"已废弃";
+            } else {
+                statusStr = @"未知";
+            }
         } else {
-            statusStr = manuscriptItem.status;
+            if ([manuscriptItem.status isEqualToString:@"AVAILABLE"]) {
+                statusStr = @"可 用";
+            } else if ([manuscriptItem.status isEqualToString:@"APPROVING"]) {
+                statusStr = @"审批中";
+            } else if ([manuscriptItem.status isEqualToString:@"INSTORAGE"]) {
+                statusStr = @"入 库";
+            } else if ([manuscriptItem.status isEqualToString:@"CREATE"]) {
+                statusStr = @"转码中";
+            } else if ([manuscriptItem.status isEqualToString:@"DISCARD"]) {
+                statusStr = @"已废弃";
+            } else if ([manuscriptItem.status isEqualToString:@"MOVE"]) {
+                statusStr = @"通 过";
+            } else if([manuscriptItem.status isEqualToString:@"COMPLETE"]){
+                statusStr = @"已完成";
+            } else if ([manuscriptItem.status isEqualToString:@"TOBE"]) {
+                statusStr = @"待 审";
+            } else if ([manuscriptItem.status isEqualToString:@"LOCKED"]) {
+                statusStr = @"锁 定";
+            } else {
+                statusStr = @"未知";
+            }
+            
         }
         [_stateButton setTitle:statusStr forState:UIControlStateNormal];
-
     }
     
     //稿件类型图标
@@ -91,50 +102,6 @@
 
 }
 
-- (void)setManuscript:(LTManuscript *)manuscript {
-    
-    //标题
-    _headlineLabel.text = manuscript.title;
-    
-    //状态标签
-    switch (manuscript.state) {
-        case ManuscriptStateEntering:
-            [_stateButton setTitle:@"入库中" forState:UIControlStateNormal];
-            break;
-        case ManuscriptStateFailPass:
-            [_stateButton setTitle:@"未通过" forState:UIControlStateNormal];
-            break;
-        case ManuscriptStatePassed:
-            [_stateButton setTitle:@"已通过" forState:UIControlStateNormal];
-            break;
-        case ManuscriptStateUnfinished:
-            [_stateButton setTitle:@"未完成" forState:UIControlStateNormal];
-            break;
-        case ManuscriptStateVerifying:
-            [_stateButton setTitle:@"审核中" forState:UIControlStateNormal];
-            break;
-        default:
-            break;
-    }
-    
-    //稿件类型图标
-    switch (manuscript.type) {
-        case ManuscriptTypeTxt:
-            [_firstTypeButton setImage:[UIImage imageNamed:@"atta_txt"] forState:UIControlStateNormal];
-            break;
-        case ManuscriptTypePhoto:
-            [_firstTypeButton setImage:[UIImage imageNamed:@"atta_photos"] forState:UIControlStateNormal];
-            break;
-        case ManuscriptTypeRecord:
-            [_firstTypeButton setImage:[UIImage imageNamed:@"atta_record"] forState:UIControlStateNormal];
-            break;
-        case ManuscriptTypeVideo:
-            [_firstTypeButton setImage:[UIImage imageNamed:@"atta_video"] forState:UIControlStateNormal];
-            break;
-        default:
-            break;
-    }
-}
 
 
 - (void)dealloc {    

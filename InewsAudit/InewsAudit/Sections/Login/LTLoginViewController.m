@@ -16,6 +16,9 @@
 #import "NSString+LT.h"
 #import "UIView+Toast.h"
 #import "AFNetworking.h"
+#import "LTUserInfo.h"
+#import "LTFileLocationHelper.h"
+#import "LTNetworkingHelper.h"
 
 @interface LTLoginViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIView *headerView;
@@ -48,6 +51,7 @@
     self.account = [LTAccountTool account];
     if (self.account) {
         self.userNameTextField.text = self.account.userName;
+        self.passwordTextField.text = self.account.password;
     }
     
     [NOTIFICATION_CENTER addObserver:self
@@ -125,6 +129,8 @@
         
     } else {
         
+        if ([[LTNetworkingHelper sharedManager] isReachable]) {
+        
         NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
         AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithSessionConfiguration:configuration];
         manager.requestSerializer = [AFHTTPRequestSerializer serializer];
@@ -144,6 +150,7 @@
             [SVProgressHUD dismiss];
 
             NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+            
             NSString *token = [result substringFromIndex:3];
             if (token && [token length] == 36) {
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -153,13 +160,17 @@
                     account.autoLogin = YES;
                     [LTAccountTool saveAccount:account];
                     
+                    [self getUserInfoByToken:token];
+                    
                     [USERDEFAULT setObject:token forKey:MANUSCRIPT_TOKEN];
                     [USERDEFAULT synchronize];
                 });
                 LTTabBarController *tabBar = [[LTTabBarController alloc]init];
                 [self presentViewController:tabBar animated:YES completion:nil];
             } else {
-                [weakSelf.view makeToast:token duration:2.0 position:CSToastPositionCenter];
+                [weakSelf.view makeToast:token
+                                                     duration:2.0
+                                                     position:CSToastPositionCenter];
             }
             
             
@@ -174,10 +185,74 @@
         }];
 
         [dataTask resume];
-        
+            
+        } else {
+            [self.view makeToast:@"当前网络不可用，请尝试连接网络后再试"
+                        duration:2.0
+                        position:CSToastPositionCenter];
+        }
     }
     
 }
+
+#pragma mark - 获取userId
+- (void)getUserInfoByToken:(NSString *)token {
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithSessionConfiguration:configuration];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+
+    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+    parameter[@"token"] = token;
+    
+    __weak typeof(self) weakSelf = self;
+    NSURLSessionDataTask *dataTask = [manager POST:kGetUserByToken parameters:parameter constructingBodyWithBlock:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSError *error;
+        NSDictionary *result = [NSJSONSerialization JSONObjectWithData:responseObject
+                                                               options:NSJSONReadingMutableContainers
+                                                                 error:&error];
+        
+        if (error) {
+            [weakSelf.view makeToast:error.description
+                            duration:2.0
+                            position:CSToastPositionCenter];
+            return ;
+        }
+        
+        if ([result[@"code"] isEqualToNumber:@(-1)]) {
+            [weakSelf.view makeToast:result[@"msg"]
+                            duration:2.0
+                            position:CSToastPositionCenter];
+            return;
+        }
+        
+        NSLog(@"%@",result);
+        
+        LTUserInfo *userInfo = [LTUserInfo userInfoWithDict:result[@"obj"]];
+        [USERDEFAULT setInteger:userInfo.userId forKey:USERINFO_USERID];
+        [USERDEFAULT synchronize];
+        
+        if (userInfo) {
+            NSMutableData *data = [[NSMutableData alloc] init];
+            NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+            [archiver encodeObject:userInfo forKey:USERINFO];
+            [archiver finishEncoding];
+            NSString *filePath = [[LTFileLocationHelper getUserInfoDocumentPath] stringByAppendingPathComponent:@"userInfo.archiver"];
+//            NSLog(@"%@",filePath);
+            [data writeToFile:filePath atomically:YES];
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if (error) {
+            NSLog(@"%@",error.localizedDescription);
+            [weakSelf.view makeToast:error.localizedDescription
+                            duration:2.0
+                            position:CSToastPositionCenter];
+        }
+    }];
+    [dataTask resume];
+}
+
 
 #pragma mark - textFieldDelegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {

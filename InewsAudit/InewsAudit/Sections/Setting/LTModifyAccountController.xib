@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9046" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9035"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LTModifyAccountController">
@@ -23,8 +23,7 @@
                     <rect key="frame" x="41" y="84" width="518" height="276"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="CMM-hu-68M">
-                            <rect key="frame" x="8" y="37" width="502" height="30"/>
-                            <animations/>
+                            <rect key="frame" x="8" y="36" width="502" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="QlM-gf-XMs"/>
                             </constraints>
@@ -32,14 +31,12 @@
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="密码:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CYk-pt-PLY">
-                            <rect key="frame" x="8" y="75" width="502" height="20"/>
-                            <animations/>
+                            <rect key="frame" x="8" y="74" width="502" height="19.5"/>
                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="EgP-Vr-AvJ">
-                            <rect key="frame" x="8" y="104" width="502" height="30"/>
-                            <animations/>
+                            <rect key="frame" x="8" y="102" width="502" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="nk9-BT-LT0"/>
                             </constraints>
@@ -47,14 +44,12 @@
                             <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                         </textField>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="重复密码：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ta-4a-e3Z">
-                            <rect key="frame" x="8" y="142" width="502" height="20"/>
-                            <animations/>
+                            <rect key="frame" x="8" y="140" width="502" height="19.5"/>
                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="P4h-Nu-P9n">
-                            <rect key="frame" x="8" y="171" width="502" height="30"/>
-                            <animations/>
+                            <rect key="frame" x="8" y="168.5" width="502" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="1Q6-0X-WRN"/>
                             </constraints>
@@ -63,7 +58,6 @@
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yaa-8T-Wew">
                             <rect key="frame" x="8" y="226" width="502" height="30"/>
-                            <animations/>
                             <color key="backgroundColor" red="0.43921568630000002" green="0.54901960780000003" blue="0.1019607843" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="M28-Of-Rdr"/>
@@ -78,13 +72,11 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="用户名:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WOf-b5-LnO">
-                            <rect key="frame" x="8" y="8" width="502" height="20"/>
-                            <animations/>
+                            <rect key="frame" x="8" y="8" width="502" height="19.5"/>
                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <animations/>
                     <constraints>
                         <constraint firstAttribute="height" constant="276" id="0Xs-Qi-aVN"/>
                         <constraint firstItem="CMM-hu-68M" firstAttribute="leading" secondItem="p2A-r8-Ak3" secondAttribute="leading" constant="8" id="27F-3O-e3x"/>
@@ -111,7 +103,6 @@
                     </constraints>
                 </view>
             </subviews>
-            <animations/>
             <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
             <gestureRecognizers/>
             <constraints>

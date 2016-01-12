@@ -10,6 +10,7 @@
 #import "LTModifyAccountController.h"
 #import "LTLoginViewController.h"
 #import "LTColorPickerController.h"
+#import "LTUserInfoController.h"
 
 @interface LTSettingViewController () <UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITableView *tableView;
@@ -86,7 +87,7 @@
     switch (indexPath.section) {
         case 0:
             if (indexPath.row == 0) {
-                cell.textLabel.text = @"修改账户";
+                cell.textLabel.text = @"用户信息";
             } else {
                 cell.textLabel.text = @"主题颜色";
             }
@@ -109,11 +110,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     switch (indexPath.section) {
         case 0:
             if (indexPath.row == 0) {
-                LTModifyAccountController *modifyVC = [[LTModifyAccountController alloc]initWithNibName:@"LTModifyAccountController" bundle:nil];
-                [self.navigationController pushViewController:modifyVC animated:YES];
+//                LTModifyAccountController *modifyVC = [[LTModifyAccountController alloc]initWithNibName:@"LTModifyAccountController" bundle:nil];
+                LTUserInfoController *userInfoVC = [[LTUserInfoController alloc] init];
+                [self.navigationController pushViewController:userInfoVC animated:YES];
             } else {
                 LTColorPickerController *colorPickerVC = [[LTColorPickerController alloc] initWithNibName:@"LTColorPickerController" bundle:nil];
                 [self.navigationController pushViewController:colorPickerVC animated:YES];

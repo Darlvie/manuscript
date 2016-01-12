@@ -60,10 +60,10 @@
                         </state>
                     </button>
                     <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LSO-sF-U3Z">
-                        <rect key="frame" x="232" y="69" width="80" height="22"/>
+                        <rect key="frame" x="248" y="69" width="64" height="22"/>
                         <color key="backgroundColor" red="0.43921568630000002" green="0.54901960780000003" blue="0.1019607843" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="80" id="Y6Z-UF-4cR"/>
+                            <constraint firstAttribute="width" constant="64" id="Y6Z-UF-4cR"/>
                             <constraint firstAttribute="height" constant="22" id="j68-3R-U7G"/>
                         </constraints>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>

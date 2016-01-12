@@ -13,4 +13,9 @@
 @interface LTManuscriptDetailViewController : UIViewController
 
 @property(nonatomic,strong) LTManuscriptItem *manuscriptItem;
+
+@property (nonatomic,assign) BOOL showUnlockedItem;
+
+- (void)getManuscriptWithManuscriptId:(int)manuscriptId;
+
 @end

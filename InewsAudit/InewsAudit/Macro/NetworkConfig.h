@@ -11,8 +11,16 @@
 
 //用户登录请求api
 #define kLoginUrl @"http://10.255.20.60/cm/uServices!login.action"
+
 //待审核稿件列表请求api
-#define kGetCheckManuscriptList @"http://10.255.20.60/cm/manuscriptApi!getCheckManuscriptList.action"
+#define kGetCheckManuscriptList @"http://10.255.20.60/cm/auditTaskApi!getAuditTask.action"
+
+//修改稿件状态
+#define kUpdateAuditTaskStaus @"http://10.255.20.60/cm/auditTaskApi!updateAuditTaskStaus.action"
+
+//审核稿件
+#define kAuditManuscript @"http://10.255.20.60/cm/auditTaskApi!updateScrStaAddTask.action"
+
 //稿件单个实例请求api
 #define kGetManuscript @"http://10.255.20.60/cm/manuscriptApi!getManuscript.action"
 //修改稿件信息请求api
@@ -25,7 +33,8 @@
 #define kGetAuditTask @"http://10.255.20.60/cm/auditTaskApi!getAuditTask.action"
 //获取稿件附件请求api
 #define kGetManuscriptAttachmeny @"http://10.255.20.60/cm/attachmentApi!getAttaByManuId"
-
+//根据token获取用户信息
+#define kGetUserByToken @"http://10.255.20.60/cm/uServices!getUserByToken.action"
 
 
 

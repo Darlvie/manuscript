@@ -12,6 +12,7 @@
 #import "UIView+Toast.h"
 #import "LTManuscriptTool.h"
 #import "MJRefresh.h"
+#import "LTNetworkingHelper.h"
 
 @interface LTManuscriptAuditController ()
 @property (nonatomic,assign) int currentPage;
@@ -41,7 +42,6 @@
     if (self.token && [self.token length]) {
         [self refreshDataSource];
     }
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -51,15 +51,28 @@
 
 - (void)refreshDataSource {
     self.currentPage = 1;
-    self.resultArray = nil;
+    [self.resultArray removeAllObjects];
+    [self.manuscriptArray removeAllObjects];
+
     
-    [self loadData];
+    if ([[LTNetworkingHelper sharedManager] isReachable]) {
+        [self loadData];
+    } else {
+        [self.navigationController.view makeToast:@"当前网络不可用，请尝试接连网络后再试"
+                    duration:2.0
+                    position:CSToastPositionCenter];
+    }
 }
 
 - (void)loadMoreData {
     self.currentPage ++;
-    [self loadData];
-}
+    if ([[LTNetworkingHelper sharedManager] isReachable]) {
+        [self loadData];
+    } else {
+        [self.navigationController.view makeToast:@"当前网络不可用，请尝试接连网络后再试"
+                    duration:2.0
+                    position:CSToastPositionCenter];
+    }}
 
 #pragma mark - Prevate
 - (void)loadData {
@@ -70,23 +83,45 @@
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+//    NSInteger userId = [USERDEFAULT integerForKey:USERINFO_USERID];
+    
     parameter[@"token"] = self.token;
     parameter[@"status"] = @"COMPLETE";
-    parameter[@"userId"] = @(1720);
+//    parameter[@"userId"] = @(userId);
     parameter[@"pageSize"] = @(self.pageSize);
     parameter[@"currentPage"] = @(self.currentPage);
     
     [SVProgressHUD show];
     __weak typeof(self) weakSelf = self;
-    NSURLSessionDataTask *dataTask = [manager POST:kGetAuditTask parameters:parameter constructingBodyWithBlock:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    NSURLSessionDataTask *dataTask = [manager POST:kGetCheckManuscriptList parameters:parameter constructingBodyWithBlock:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [SVProgressHUD dismiss];
         //        NSLog(@"%@",task.response);
         NSError *error = nil;
         NSDictionary *result = [NSJSONSerialization JSONObjectWithData:responseObject
                                                                options:NSJSONReadingMutableContainers
                                                                  error:&error];
+//        NSLog(@"result:%@",result);
         if (error) {
-            [weakSelf.view makeToast:@"数据序列化失败！" duration:2.0 position:CSToastPositionCenter];
+            [weakSelf.navigationController.view makeToast:@"数据序列化失败！"
+                                         duration:2.0
+                                         position:CSToastPositionCenter];
+            return;
+        }
+        
+        if ([result[@"code"] isEqualToNumber:@(-1)]) {
+            [weakSelf.navigationController.view makeToast:result[@"msg"]
+                                                 duration:2.0
+                                                 position:CSToastPositionCenter];
+            self.tableView.tableHeaderView = self.noDataLabel;
+            return;
+        }
+
+        
+        if ([result[@"obj"] isEqual:[NSNull null]]) {
+            [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
+            [weakSelf.navigationController.view makeToast:result[@"msg"]
+                                                 duration:2.0
+                                                 position:CSToastPositionCenter];
             return;
         }
         
@@ -100,19 +135,23 @@
         [weakSelf.resultArray addObjectsFromArray:array];
         dispatch_async(dispatch_get_main_queue(), ^{
             weakSelf.manuscriptArray = self.resultArray;
+            weakSelf.tableView.tableHeaderView = nil;
             [weakSelf.tableView reloadData];
-            weakSelf.tableView.scrollEnabled = YES;
+            
         });
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [SVProgressHUD dismiss];
         
-        [weakSelf.view makeToast:error.localizedDescription duration:2.0 position:CSToastPositionCenter];
+        [weakSelf.navigationController.view makeToast:error.localizedDescription
+                                             duration:2.0
+                                             position:CSToastPositionCenter];
         weakSelf.tableView.scrollEnabled = YES;
+        [weakSelf.tableView reloadData];
     }];
     
     [dataTask resume];
-
+    weakSelf.tableView.scrollEnabled = YES;
 }
 
 

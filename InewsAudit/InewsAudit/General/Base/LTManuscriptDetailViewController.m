@@ -7,18 +7,26 @@
 //
 
 #import "LTManuscriptDetailViewController.h"
-#import "LTManuscript.h"
 #import "MJExtension.h"
 #import "LTManuscriptVerifyFooterView.h"
 #import "LTFailPassFooterView.h"
 #import "LTPassedFooterView.h"
 #import "LTManuscriptItem.h"
+#import "AFNetworking.h"
+#import "SVProgressHUD.h"
+#import "UIView+Toast.h"
+#import "LTManuscriptDetail.h"
+#import "LTNetworkingHelper.h"
+#import "Masonry.h"
+
 
 @interface LTManuscriptDetailViewController () <UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,strong) UITableView *tableView;
 @property(nonatomic,strong) NSArray *titleArray;
 @property(nonatomic,strong) id footerView;
+@property(nonatomic,strong) LTManuscriptDetail *manuscriptDetail;
+@property(nonatomic,strong) UIView *bottomBar;
 @end
 
 @implementation LTManuscriptDetailViewController
@@ -42,27 +50,16 @@
 - (id)footerView {
     
     if (!_footerView) {
-        switch (self.manuscriptItem.state) {
-            case ManuscriptStateEntering:
-            case ManuscriptStatePassed:
-            {
+        if ([self.manuscriptItem.status isEqualToString:@"COMPLETE"]) {
+            if ([self.manuscriptItem.md[@"status"] isEqualToString:@"MOVE"]) {
                 _footerView = [LTPassedFooterView passedFooterView];
-            }
-                break;
-            case ManuscriptStateFailPass:
-            {
+            } else if ([self.manuscriptItem.md[@"status"] isEqualToString:@"DISCARD"]) {
                 _footerView = [LTFailPassFooterView failPassFooterView];
             }
-                break;
-            case ManuscriptStateUnfinished:
-            case ManuscriptStateVerifying:
-            {
-                _footerView = [LTManuscriptVerifyFooterView manuscriptVerifyFooterView];
-            }
-            default:
-                break;
+            
+        } else {
+            _footerView = [LTManuscriptVerifyFooterView manuscriptVerifyFooterView];
         }
-          
     }
     return _footerView;
 }
@@ -74,20 +71,97 @@
     
     self.title = @"稿件详情";
     
+    if (self.showUnlockedItem) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"解锁"
+                                                                                  style:UIBarButtonItemStyleDone
+                                                                                 target:self
+                                                                                 action:@selector(unLockedAction)];
+    } else {
+        self.navigationItem.rightBarButtonItem = nil;
+    }
+    
+    [self setupBottomBar];
     [self setupTableView];
+    [_bottomBar addSubview:self.footerView];
+    [self setupRestraint];
+    
     // Do any additional setup after loading the view from its nib.
+    [NOTIFICATION_CENTER addObserver:self
+                            selector:@selector(passButtonDidClick:)
+                                name:MANUSCRIPT_VERIFY_PASS
+                              object:nil];
+    [NOTIFICATION_CENTER addObserver:self
+                            selector:@selector(noPassButtonClick:)
+                                name:MANUSCRIPT_VERIFY_NOPASS
+                              object:nil];
+}
+
+- (void)setupBottomBar {
+    if (!_bottomBar) {
+        _bottomBar = [[UIView alloc] initWithFrame:CGRectZero];
+    }
+//    CGFloat height = 50;
+//    _bottomBar.frame = CGRectMake(0, SCREEN_HEIGTH - height, SCREEN_WIDTH, height);
+    _bottomBar.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:_bottomBar];
 }
 
 - (void)setupTableView {
     if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     }
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    _tableView.tableFooterView = self.footerView;
-    _tableView.tableFooterView.userInteractionEnabled = YES;
+//    _tableView.tableFooterView = self.footerView;
+//    _tableView.tableFooterView.userInteractionEnabled = YES;
     [self.view addSubview:_tableView];
+}
+
+- (void)setupRestraint {
+    [self.bottomBar mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view.mas_left);
+        make.bottom.equalTo(self.view.mas_bottom);
+        make.right.equalTo(self.view.mas_right);
+        make.height.equalTo(@50);
+    }];
+    
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view.mas_top).with.offset(64);
+        make.right.equalTo(self.view.mas_right);
+        make.left.equalTo(self.view.mas_left);
+        make.bottom.equalTo(self.bottomBar.mas_top);
+    }];
+    
+    [self.footerView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.bottomBar.mas_top);
+        make.right.equalTo(self.bottomBar.mas_right);
+        make.bottom.equalTo(self.bottomBar.mas_bottom);
+        make.left.equalTo(self.bottomBar.mas_left);
+    }];
+}
+
+- (void)unLockedAction {
+    LTNetworkingHelper *helper = [LTNetworkingHelper sharedManager];
+    if ([self.manuscriptItem.status isEqualToString:@"LOCKED"]) {
+//        [helper updateManuscriptStateWithToken:[USERDEFAULT objectForKey:MANUSCRIPT_TOKEN]
+//                                        status:@"TOBE"
+//                                        taskId:self.manuscriptItem.taskId];
+        NSMutableDictionary *param = [NSMutableDictionary dictionary];
+        param[@"token"] = [USERDEFAULT objectForKey:MANUSCRIPT_TOKEN];
+        param[@"status"] = @"TOBE";
+        param[@"taskId"] = @(self.manuscriptItem.taskId);
+        __weak typeof(self) weakSelf = self;
+        [helper updateManuscript:param success:^(id responseDic) {
+            if (responseDic) {
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+            }
+            
+        } fail:^(NSError *error) {
+            [weakSelf.view makeToast:error.description duration:2.0 position:CSToastPositionCenter];
+        }];
+        
+    }
     
 }
 
@@ -113,6 +187,66 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)dealloc {
+    [NOTIFICATION_CENTER removeObserver:self];
+}
+
+#pragma mark - public
+- (void)getManuscriptWithManuscriptId:(int)manuscriptId {
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithSessionConfiguration:configuration];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
+    NSString *token = [USERDEFAULT objectForKey:MANUSCRIPT_TOKEN];
+    
+    parameter[@"token"] = token;
+    parameter[@"manuscriptId"] = @(manuscriptId);
+    
+    [SVProgressHUD show];
+    __weak typeof(self) weakSelf = self;
+    NSURLSessionDataTask *dataTask = [manager POST:kGetManuscript parameters:parameter constructingBodyWithBlock:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [SVProgressHUD dismiss];
+        NSError *error = nil;
+        NSDictionary *result = [NSJSONSerialization JSONObjectWithData:responseObject
+                                                               options:NSJSONReadingMutableContainers
+                                                                 error:&error];
+        if (error) {
+            [weakSelf.navigationController.view makeToast:@"数据序列化失败！"
+                                                 duration:2.0
+                                                 position:CSToastPositionCenter];
+            return;
+        }
+        
+        NSLog(@"%@",result);
+        if ([result[@"code"] isEqualToNumber:@(-1)] || [result[@"obj"] isEqual:[NSNull null]]) {
+            [weakSelf.navigationController.view makeToast:result[@"msg"]
+                                                 duration:2.0
+                                                 position:CSToastPositionCenter];
+            return;
+        }
+        
+        self.manuscriptDetail = [LTManuscriptDetail manuscriptDetailWithDict:result[@"obj"]];
+        
+        if (self.manuscriptDetail) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf.tableView reloadData];
+            });
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [SVProgressHUD dismiss];
+        [weakSelf.navigationController.view makeToast:error.localizedDescription
+                                             duration:2.0
+                                             position:CSToastPositionCenter];
+        
+    }];
+    [dataTask resume];
+    
+}
+
 
 #pragma mark - Table view data source
 
@@ -147,7 +281,9 @@
         {
             UILabel *headLineLabel = [[UILabel alloc] init];
             headLineLabel.frame = CGRectMake(10, 5, SCREEN_WIDTH - 15, 60);
-            headLineLabel.text = self.manuscriptItem.title;
+            if (self.manuscriptItem) {
+                headLineLabel.text = [self.manuscriptItem.title length]? self.manuscriptItem.title : @"暂无数据";
+            }
             headLineLabel.numberOfLines = 0;
             headLineLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
             [cell.contentView addSubview:headLineLabel];
@@ -159,7 +295,12 @@
             cell.textLabel.text = [NSString stringWithFormat:@"%@:",titleStr];
             cell.textLabel.textAlignment = NSTextAlignmentLeft;
          
-            cell.detailTextLabel.text = [self detailStringWithIndexPath:indexPath];
+            if (self.manuscriptItem) {
+                cell.detailTextLabel.text = [self detailStringWithIndexPath:indexPath];
+            } else {
+                cell.detailTextLabel.text = @"暂无数据";
+            }
+            
             cell.detailTextLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
         }
             break;
@@ -191,28 +332,28 @@
 - (NSString *)detailStringWithIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.row) {
         case 0:
-            return [self stringWithManuscriptState:self.manuscript.state];
+            return [self.manuscriptItem.status length]? self.manuscriptItem.status : @"暂无数据";
             break;
         case 1:
-            return self.manuscript.sID;
+            return [NSString stringWithFormat:@"%d",self.manuscriptItem.manuscriptId];
             break;
         case 2:
-            return self.manuscript.author;
+            return [self.manuscriptItem.md[@"author"] length]? self.manuscriptItem.md[@"author"] : @"暂无数据";
             break;
         case 3:
-            return self.manuscript.enterUser;
+            return [self.manuscriptItem.userName length]? self.manuscriptItem.userName : @"暂无数据";
             break;
         case 4:
-            return self.manuscript.department;
+            return [self.manuscriptItem.md[@"department"] length]? self.manuscriptItem.md[@"department"] : @"暂无数据";
             break;
         case 5:
-            return self.manuscript.timeStamp;
+            return [self.manuscriptItem.updateTime length]? self.manuscriptItem.updateTime : @"暂无数据";
             break;
         case 6:
-            return self.manuscript.channel;
+            return [self.manuscriptItem.md[@"columnsName"] length]? self.manuscriptItem.md[@"columnsName"] : @"暂无数据";
             break;
         case 7:
-            return self.manuscript.device;
+            return @"暂无数据";
             break;
         default:
             return nil;
@@ -220,28 +361,45 @@
     }
 }
 
-//判断稿件状态，转换成中文显示
-- (NSString *)stringWithManuscriptState:(NSUInteger)state {
-    switch (state) {
-        case ManuscriptStateEntering:
-            return @"入库中";
-            break;
-        case ManuscriptStateFailPass:
-            return @"未通过";
-            break;
-        case ManuscriptStatePassed:
-            return @"已通过";
-            break;
-        case ManuscriptStateUnfinished:
-            return @"未完成";
-            break;
-        case ManuscriptStateVerifying:
-            return @"审核中";
-            break;
-        default:
-            return nil;
-            break;
-    }
+
+#pragma mark - Notification
+- (void)passButtonDidClick:(id)sender {
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
+//                                                    message:@"确定该稿件通过审核？"
+//                                                   delegate:nil
+//                                          cancelButtonTitle:@"取消"
+//                                          otherButtonTitles:@"确认", nil];
+//    [alert show];
+    
+    
+    LTNetworkingHelper *helper = [LTNetworkingHelper sharedManager];
+    [helper auditManuscriptWithToken:[USERDEFAULT objectForKey:MANUSCRIPT_TOKEN]
+                              status:@"MOVE"
+                              taskId:self.manuscriptItem.taskId];
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
+
+
+- (void)noPassButtonClick:(id)sender {
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
+//                                                    message:@"确定该稿件不通过审核？"
+//                                                   delegate:nil
+//                                          cancelButtonTitle:@"取消"
+//                                          otherButtonTitles:@"确认", nil];
+//    [alert show];
+    
+    LTNetworkingHelper *helper = [LTNetworkingHelper sharedManager];
+    [helper auditManuscriptWithToken:[USERDEFAULT objectForKey:MANUSCRIPT_TOKEN]
+                              status:@"DISCARD"
+                              taskId:self.manuscriptItem.taskId];
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+
+
+
+
 
 @end

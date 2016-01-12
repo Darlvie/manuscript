@@ -9,8 +9,11 @@
 /* Begin PBXBuildFile section */
 		1BC35C1B1C337E19009EF7AB /* LTManuscriptItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC35C1A1C337E19009EF7AB /* LTManuscriptItem.m */; };
 		1BC35C1E1C3381FF009EF7AB /* LTManuscriptTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC35C1D1C3381FF009EF7AB /* LTManuscriptTool.m */; };
+		1BC35C211C34C3D1009EF7AB /* LTUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC35C201C34C3D1009EF7AB /* LTUserInfo.m */; };
+		1BC35C251C351552009EF7AB /* LTUserInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC35C241C351552009EF7AB /* LTUserInfoController.m */; };
+		1BC35C281C3520AA009EF7AB /* LTFileLocationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC35C271C3520AA009EF7AB /* LTFileLocationHelper.m */; };
+		1BC35C2B1C3A11E9009EF7AB /* LTNetworkingHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC35C2A1C3A11E9009EF7AB /* LTNetworkingHelper.m */; };
 		27DDC4B41C322BBE001413EE /* LTAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DDC4B11C322BBE001413EE /* LTAccount.m */; };
-		27DDC4B51C322BBE001413EE /* LTManuscript.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DDC4B31C322BBE001413EE /* LTManuscript.m */; };
 		27DDC4CD1C322CF0001413EE /* LTLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DDC4B91C322CF0001413EE /* LTLoginViewController.m */; };
 		27DDC4CE1C322CF0001413EE /* LTLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27DDC4BA1C322CF0001413EE /* LTLoginViewController.xib */; };
 		27DDC4CF1C322CF0001413EE /* LTManuscriptAuditController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DDC4BD1C322CF0001413EE /* LTManuscriptAuditController.m */; };
@@ -64,12 +67,19 @@
 		1BC35C1A1C337E19009EF7AB /* LTManuscriptItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTManuscriptItem.m; sourceTree = "<group>"; };
 		1BC35C1C1C3381FF009EF7AB /* LTManuscriptTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTManuscriptTool.h; sourceTree = "<group>"; };
 		1BC35C1D1C3381FF009EF7AB /* LTManuscriptTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTManuscriptTool.m; sourceTree = "<group>"; };
+		1BC35C1F1C34C3D1009EF7AB /* LTUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTUserInfo.h; sourceTree = "<group>"; };
+		1BC35C201C34C3D1009EF7AB /* LTUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTUserInfo.m; sourceTree = "<group>"; };
+		1BC35C221C350BB8009EF7AB /* NotiMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotiMacro.h; sourceTree = "<group>"; };
+		1BC35C231C351552009EF7AB /* LTUserInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTUserInfoController.h; sourceTree = "<group>"; };
+		1BC35C241C351552009EF7AB /* LTUserInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTUserInfoController.m; sourceTree = "<group>"; };
+		1BC35C261C3520AA009EF7AB /* LTFileLocationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTFileLocationHelper.h; sourceTree = "<group>"; };
+		1BC35C271C3520AA009EF7AB /* LTFileLocationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTFileLocationHelper.m; sourceTree = "<group>"; };
+		1BC35C291C3A11E9009EF7AB /* LTNetworkingHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTNetworkingHelper.h; sourceTree = "<group>"; };
+		1BC35C2A1C3A11E9009EF7AB /* LTNetworkingHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTNetworkingHelper.m; sourceTree = "<group>"; };
 		277100201BE73AC400B6E7AE /* InewsAudit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InewsAudit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		277100391BE73AC400B6E7AE /* InewsAudit.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InewsAudit.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		27DDC4B01C322BBE001413EE /* LTAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTAccount.h; sourceTree = "<group>"; };
 		27DDC4B11C322BBE001413EE /* LTAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTAccount.m; sourceTree = "<group>"; };
-		27DDC4B21C322BBE001413EE /* LTManuscript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTManuscript.h; sourceTree = "<group>"; };
-		27DDC4B31C322BBE001413EE /* LTManuscript.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTManuscript.m; sourceTree = "<group>"; };
 		27DDC4B81C322CF0001413EE /* LTLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTLoginViewController.h; sourceTree = "<group>"; };
 		27DDC4B91C322CF0001413EE /* LTLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTLoginViewController.m; sourceTree = "<group>"; };
 		27DDC4BA1C322CF0001413EE /* LTLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LTLoginViewController.xib; sourceTree = "<group>"; };
@@ -180,12 +190,12 @@
 			children = (
 				27DDC4B01C322BBE001413EE /* LTAccount.h */,
 				27DDC4B11C322BBE001413EE /* LTAccount.m */,
-				27DDC4B21C322BBE001413EE /* LTManuscript.h */,
-				27DDC4B31C322BBE001413EE /* LTManuscript.m */,
 				27DDC50C1C323569001413EE /* LTManuscriptDetail.h */,
 				27DDC50D1C323569001413EE /* LTManuscriptDetail.m */,
 				1BC35C191C337E19009EF7AB /* LTManuscriptItem.h */,
 				1BC35C1A1C337E19009EF7AB /* LTManuscriptItem.m */,
+				1BC35C1F1C34C3D1009EF7AB /* LTUserInfo.h */,
+				1BC35C201C34C3D1009EF7AB /* LTUserInfo.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -195,8 +205,8 @@
 			children = (
 				27DDC4B71C322CF0001413EE /* Login */,
 				27DDC4BE1C322CF0001413EE /* ManuscriptList */,
-				27DDC4BB1C322CF0001413EE /* ManuscriptAudit */,
 				27DDC4C11C322CF0001413EE /* MyTask */,
+				27DDC4BB1C322CF0001413EE /* ManuscriptAudit */,
 				27DDC4C41C322CF0001413EE /* Setting */,
 			);
 			path = Sections;
@@ -250,6 +260,8 @@
 				27DDC4CA1C322CF0001413EE /* LTModifyAccountController.xib */,
 				27DDC4CB1C322CF0001413EE /* LTSettingViewController.h */,
 				27DDC4CC1C322CF0001413EE /* LTSettingViewController.m */,
+				1BC35C231C351552009EF7AB /* LTUserInfoController.h */,
+				1BC35C241C351552009EF7AB /* LTUserInfoController.m */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -321,6 +333,10 @@
 				27DDC51F1C325C93001413EE /* LTUnderlineTextField.m */,
 				1BC35C1C1C3381FF009EF7AB /* LTManuscriptTool.h */,
 				1BC35C1D1C3381FF009EF7AB /* LTManuscriptTool.m */,
+				1BC35C261C3520AA009EF7AB /* LTFileLocationHelper.h */,
+				1BC35C271C3520AA009EF7AB /* LTFileLocationHelper.m */,
+				1BC35C291C3A11E9009EF7AB /* LTNetworkingHelper.h */,
+				1BC35C2A1C3A11E9009EF7AB /* LTNetworkingHelper.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -352,6 +368,7 @@
 				27F75C321C30E6DF006063D7 /* Public.h */,
 				27DDC5261C325F18001413EE /* NetworkConfig.h */,
 				1BC35C181C327158009EF7AB /* AppMacro.h */,
+				1BC35C221C350BB8009EF7AB /* NotiMacro.h */,
 			);
 			path = Macro;
 			sourceTree = "<group>";
@@ -442,6 +459,7 @@
 		277100181BE73AC400B6E7AE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = LT;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = BGXT;
 				TargetAttributes = {
@@ -558,10 +576,12 @@
 			files = (
 				27DDC5071C322D7B001413EE /* LTFailPassFooterView.m in Sources */,
 				27DDC4CD1C322CF0001413EE /* LTLoginViewController.m in Sources */,
+				1BC35C211C34C3D1009EF7AB /* LTUserInfo.m in Sources */,
 				27DDC5091C322D7B001413EE /* LTPassedFooterView.m in Sources */,
 				27DDC4D41C322CF0001413EE /* LTModifyAccountController.m in Sources */,
 				27DDC5081C322D7B001413EE /* LTManuscriptVerifyFooterView.m in Sources */,
 				27DDC4D01C322CF0001413EE /* LTManuscriptListController.m in Sources */,
+				1BC35C2B1C3A11E9009EF7AB /* LTNetworkingHelper.m in Sources */,
 				27DDC5051C322D7B001413EE /* LTBaseManuscriptCell.m in Sources */,
 				27DDC4D61C322CF0001413EE /* LTSettingViewController.m in Sources */,
 				27F75C731C30E6DF006063D7 /* main.m in Sources */,
@@ -569,15 +589,16 @@
 				27DDC5241C325C93001413EE /* LTTabBarItem.m in Sources */,
 				27DDC4D21C322CF0001413EE /* LTColorPickerController.m in Sources */,
 				27DDC4CF1C322CF0001413EE /* LTManuscriptAuditController.m in Sources */,
-				27DDC4B51C322BBE001413EE /* LTManuscript.m in Sources */,
 				27DDC5221C325C93001413EE /* LTTabBar.m in Sources */,
 				27DDC5231C325C93001413EE /* LTTabBarController.m in Sources */,
 				27DDC5251C325C93001413EE /* LTUnderlineTextField.m in Sources */,
+				1BC35C251C351552009EF7AB /* LTUserInfoController.m in Sources */,
 				27DDC5201C325C93001413EE /* LTAccountTool.m in Sources */,
 				27DDC5121C3257B2001413EE /* NSString+LT.m in Sources */,
 				27DDC4FA1C322D7B001413EE /* LTBaseManuscriptController.m in Sources */,
 				1BC35C1E1C3381FF009EF7AB /* LTManuscriptTool.m in Sources */,
 				1BC35C1B1C337E19009EF7AB /* LTManuscriptItem.m in Sources */,
+				1BC35C281C3520AA009EF7AB /* LTFileLocationHelper.m in Sources */,
 				27DDC4D11C322CF0001413EE /* LTMyTaskController.m in Sources */,
 				27DDC4FB1C322D7B001413EE /* LTManuscriptDetailViewController.m in Sources */,
 				27DDC4B41C322BBE001413EE /* LTAccount.m in Sources */,

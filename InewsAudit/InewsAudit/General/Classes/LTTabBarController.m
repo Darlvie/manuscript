@@ -27,11 +27,11 @@
     LTManuscriptListController *manuscriptListVC = [[LTManuscriptListController alloc]init];
     [self addChildViewController:manuscriptListVC title:@"稿件列表"];
     
-    LTManuscriptAuditController *manuscriptVerifyVC = [[LTManuscriptAuditController alloc]init];
-    [self addChildViewController:manuscriptVerifyVC title:@"稿件审核"];
-    
     LTMyTaskController *myTaskVC = [[LTMyTaskController alloc]init];
     [self addChildViewController:myTaskVC title:@"我的任务"];
+    
+    LTManuscriptAuditController *manuscriptVerifyVC = [[LTManuscriptAuditController alloc]init];
+    [self addChildViewController:manuscriptVerifyVC title:@"审核记录"];
     
 }
 
@@ -65,8 +65,8 @@
     
     //为控制器添加按钮
     [tabBarView addButtonWithTitle:@"稿件列表"];
-    [tabBarView addButtonWithTitle:@"稿件审核"];
     [tabBarView addButtonWithTitle:@"我的任务"];
+    [tabBarView addButtonWithTitle:@"审核记录"];
     
 }
 

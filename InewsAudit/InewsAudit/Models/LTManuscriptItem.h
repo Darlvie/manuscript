@@ -14,11 +14,17 @@
 
 @property (nonatomic,assign) int manuscriptId;
 
+@property(nonatomic,strong) NSDictionary *md;
+
 @property (nonatomic,copy) NSString *title;
 
 @property (nonatomic,copy) NSString *status;
 
-@property (nonatomic,copy) NSString *type;
+@property (nonatomic,assign) int taskId;
+
+@property (nonatomic,copy) NSString *updateTime;
+
+@property (nonatomic,copy) NSString *userName;
 
 + (instancetype)itemWithDict:(NSDictionary *)dict;
 

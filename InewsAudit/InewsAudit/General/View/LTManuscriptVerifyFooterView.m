@@ -28,15 +28,12 @@
 }
 
 - (IBAction)noPassButtonAction:(id)sender {
-    if ([self respondsToSelector:@selector(noPassButtonClick:)]) {
-        [self.delegate noPassButtonClick:sender];
-    }
+    [NOTIFICATION_CENTER postNotificationName:MANUSCRIPT_VERIFY_NOPASS object:nil];
 }
 
 - (IBAction)passButtonAction:(id)sender {
-    if ([self respondsToSelector:@selector(passButtonDidClick:)]) {
-        [self.delegate passButtonDidClick:sender];
-    }
+    [NOTIFICATION_CENTER postNotificationName:MANUSCRIPT_VERIFY_PASS object:nil];
+
 }
 
 

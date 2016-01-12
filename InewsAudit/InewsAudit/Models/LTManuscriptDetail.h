@@ -38,5 +38,6 @@
 /** 栏目名称 */
 @property (nonatomic,copy) NSString *columnName;
 
++ (instancetype)manuscriptDetailWithDict:(NSDictionary *)dict;
 
 @end
