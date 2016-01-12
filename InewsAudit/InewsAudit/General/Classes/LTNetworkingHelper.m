@@ -125,6 +125,26 @@
     [dataTask resume];
 }
 
+- (void)auditManuscript:(NSDictionary *)param success:(void (^)(id))success fail:(void (^)(NSError *))fail {
+    if (param == nil) {
+        return;
+    }
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithSessionConfiguration:configuration];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    NSURLSessionDataTask *dataTask = [manager GET:kAuditManuscript parameters:param progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        fail(error);
+    }];
+    [dataTask resume];
+}
+
 - (void)dealloc {
     [[AFNetworkReachabilityManager sharedManager] stopMonitoring];
     NSLog(@"LTNetworkingHelper dealloc");

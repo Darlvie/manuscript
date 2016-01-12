@@ -15,6 +15,7 @@
 #import "LTManuscriptListController.h"
 #import "LTNetworkingHelper.h"
 #import "LTMyTaskController.h"
+#import "UIView+Toast.h"
 
 @interface LTBaseManuscriptController ()
 
@@ -119,17 +120,34 @@ static NSString * const reuseIdentifier = @"baseManuscriptCell";
     //[detailVC getManuscriptWithManuscriptId:item.manuscriptId];
     if ([self isKindOfClass:[LTManuscriptListController class]]) {
         LTNetworkingHelper *helper = [LTNetworkingHelper sharedManager];
-        [helper updateManuscriptStateWithToken:[USERDEFAULT objectForKey:MANUSCRIPT_TOKEN]
-                                        status:@"LOCKED"
-                                        taskId:item.taskId];
-        detailVC.showUnlockedItem = NO;
+//        [helper updateManuscriptStateWithToken:[USERDEFAULT objectForKey:MANUSCRIPT_TOKEN]
+//                                        status:@"LOCKED"
+//                                        taskId:item.taskId];
+        NSMutableDictionary *param = [NSMutableDictionary dictionary];
+        param[@"token"] = [USERDEFAULT objectForKey:MANUSCRIPT_TOKEN];
+        param[@"status"] = @"LOCKED";
+        param[@"taskId"] = @(item.taskId);
+        __weak typeof(self) weakSelf = self;
+        [helper updateManuscript:param success:^(id responseDic) {
+            if (responseDic) {
+                detailVC.showUnlockedItem = NO;
+                [self.navigationController pushViewController:detailVC animated:YES];
+            }
+            
+        } fail:^(NSError *error) {
+            [weakSelf.view makeToast:error.description duration:2.0 position:CSToastPositionCenter];
+        }];
+
+        
     } else if ([self isKindOfClass:[LTMyTaskController class]]){
         detailVC.showUnlockedItem = YES;
+        [self.navigationController pushViewController:detailVC animated:YES];
     } else {
         detailVC.showUnlockedItem = NO;
+        [self.navigationController pushViewController:detailVC animated:YES];
     }
     
-    [self.navigationController pushViewController:detailVC animated:YES];
+    
 }
 
 #pragma mark - Action

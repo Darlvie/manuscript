@@ -47,7 +47,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
 
     self.token = [USERDEFAULT objectForKey:MANUSCRIPT_TOKEN];
     if (self.token && [self.token length]) {
@@ -135,6 +135,7 @@
                                                  duration:2.0
                                                  position:CSToastPositionCenter];
             self.tableView.tableHeaderView = self.noDataLabel;
+            [self.tableView reloadData];
             return;
         }
         

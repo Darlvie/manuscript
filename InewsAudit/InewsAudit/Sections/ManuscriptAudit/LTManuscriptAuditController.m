@@ -113,6 +113,7 @@
                                                  duration:2.0
                                                  position:CSToastPositionCenter];
             self.tableView.tableHeaderView = self.noDataLabel;
+            [self.tableView reloadData];
             return;
         }
 
