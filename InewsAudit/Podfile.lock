@@ -1,0 +1,42 @@
+PODS:
+  - AFNetworking (3.0.4):
+    - AFNetworking/NSURLSession (= 3.0.4)
+    - AFNetworking/Reachability (= 3.0.4)
+    - AFNetworking/Security (= 3.0.4)
+    - AFNetworking/Serialization (= 3.0.4)
+    - AFNetworking/UIKit (= 3.0.4)
+  - AFNetworking/NSURLSession (3.0.4):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.0.4)
+  - AFNetworking/Security (3.0.4)
+  - AFNetworking/Serialization (3.0.4)
+  - AFNetworking/UIKit (3.0.4):
+    - AFNetworking/NSURLSession
+  - Color-Picker-for-iOS (2.0.2)
+  - Masonry (0.6.4)
+  - MJExtension (2.5.16)
+  - MJRefresh (3.0.8)
+  - SVProgressHUD (1.1.3)
+  - Toast (3.0)
+
+DEPENDENCIES:
+  - AFNetworking (~> 3.0)
+  - Color-Picker-for-iOS (~> 2.0)
+  - Masonry
+  - MJExtension (~> 2.5.16)
+  - MJRefresh (~> 3.0.8)
+  - SVProgressHUD
+  - Toast (~> 3.0)
+
+SPEC CHECKSUMS:
+  AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
+  Color-Picker-for-iOS: 4980589b3e3cfe7198f227dd50be9adb02d8bc0b
+  Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
+  MJExtension: b8c1321a77d91bcc007b94d38cbf5383c95ea30e
+  MJRefresh: fafde8f18f4afd66b434331a9beb67a6c0264056
+  SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
+  Toast: 32c59229abfcf41850162b83bb9259dc84372473
+
+COCOAPODS: 0.39.0

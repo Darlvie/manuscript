@@ -1,4 +1,0 @@
-platform :ios,'7.0'
-pod 'SVProgressHUD'
-pod 'MJExtension', '~> 2.5.16'
-pod "Color-Picker-for-iOS", "~> 2.0"
