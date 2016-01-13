@@ -18,7 +18,7 @@
 #import "LTManuscriptDetail.h"
 #import "LTNetworkingHelper.h"
 #import "Masonry.h"
-
+#import "UIView+Toast.h"
 
 @interface LTManuscriptDetailViewController () <UITableViewDelegate,UITableViewDataSource>
 
@@ -144,9 +144,6 @@
 - (void)unLockedAction {
     LTNetworkingHelper *helper = [LTNetworkingHelper sharedManager];
     if ([self.manuscriptItem.status isEqualToString:@"LOCKED"]) {
-//        [helper updateManuscriptStateWithToken:[USERDEFAULT objectForKey:MANUSCRIPT_TOKEN]
-//                                        status:@"TOBE"
-//                                        taskId:self.manuscriptItem.taskId];
         NSMutableDictionary *param = [NSMutableDictionary dictionary];
         param[@"token"] = [USERDEFAULT objectForKey:MANUSCRIPT_TOKEN];
         param[@"status"] = @"TOBE";
@@ -158,7 +155,9 @@
             }
             
         } fail:^(NSError *error) {
-            [weakSelf.view makeToast:error.description duration:2.0 position:CSToastPositionCenter];
+            [weakSelf.navigationController.view makeToast:error.description
+                                                 duration:2.0
+                                                 position:CSToastPositionCenter];
         }];
         
     }
@@ -220,7 +219,7 @@
             return;
         }
         
-        NSLog(@"%@",result);
+//        NSLog(@"%@",result);
         if ([result[@"code"] isEqualToNumber:@(-1)] || [result[@"obj"] isEqual:[NSNull null]]) {
             [weakSelf.navigationController.view makeToast:result[@"msg"]
                                                  duration:2.0
@@ -373,11 +372,24 @@
     
     
     LTNetworkingHelper *helper = [LTNetworkingHelper sharedManager];
-    [helper auditManuscriptWithToken:[USERDEFAULT objectForKey:MANUSCRIPT_TOKEN]
-                              status:@"MOVE"
-                              taskId:self.manuscriptItem.taskId];
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    param[@"token"] = [USERDEFAULT objectForKey:MANUSCRIPT_TOKEN];
+    param[@"status"] = @"MOVE";
+    param[@"taskId"] = @(self.manuscriptItem.taskId);
     
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    __weak typeof(self) weakSelf = self;
+    [helper auditManuscript:param success:^(id responseDic) {
+        if (responseDic) {
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        }
+    } fail:^(NSError *error) {
+        if (error) {
+            [weakSelf.navigationController.view makeToast:error.description
+                                                 duration:2.0
+                                                 position:CSToastPositionCenter];
+        }
+    }];
+    
 }
 
 
@@ -390,11 +402,24 @@
 //    [alert show];
     
     LTNetworkingHelper *helper = [LTNetworkingHelper sharedManager];
-    [helper auditManuscriptWithToken:[USERDEFAULT objectForKey:MANUSCRIPT_TOKEN]
-                              status:@"DISCARD"
-                              taskId:self.manuscriptItem.taskId];
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    param[@"token"] = [USERDEFAULT objectForKey:MANUSCRIPT_TOKEN];
+    param[@"status"] = @"DISCARD";
+    param[@"taskId"] = @(self.manuscriptItem.taskId);
     
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    __weak typeof(self) weakSelf = self;
+    [helper auditManuscript:param success:^(id responseDic) {
+        if (responseDic) {
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        }
+    } fail:^(NSError *error) {
+        if (error) {
+            [weakSelf.navigationController.view makeToast:error.description
+                                                 duration:2.0
+                                                 position:CSToastPositionCenter];
+        }
+    }];
+
 }
 
 

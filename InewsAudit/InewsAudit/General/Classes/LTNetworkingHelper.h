@@ -16,11 +16,7 @@
 
 - (BOOL)isReachable;
 
-- (void)updateManuscriptStateWithToken:(NSString *)token status:(NSString *)status taskId:(int)taskId;
-
 - (void)updateManuscript:(NSDictionary *)param success:(void(^)(id responseDic))success fail:(void(^)(NSError *error))fail;
-
-- (void)auditManuscriptWithToken:(NSString *)token status:(NSString *)status taskId:(int)taskId;
 
 - (void)auditManuscript:(NSDictionary *)param success:(void(^)(id responseDic))success fail:(void(^)(NSError *error))fail;
 

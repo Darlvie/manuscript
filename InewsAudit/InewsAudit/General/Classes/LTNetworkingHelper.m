@@ -63,26 +63,6 @@
     return self.isConnectionNet;
 }
 
-- (void)updateManuscriptStateWithToken:(NSString *)token status:(NSString *)status taskId:(int)taskId {
-    if (token == nil || status == nil || taskId < 0) {
-        return;
-    }
-    
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithSessionConfiguration:configuration];
-    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
-    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
-    parameter[@"token"] = token;
-    parameter[@"status"] = status;
-    parameter[@"taskId"] = @(taskId);
-    
-    NSURLSessionDataTask *dataTask = [manager GET:kUpdateAuditTaskStaus parameters:parameter progress:nil success:nil failure:nil];
- 
-    [dataTask resume];
-}
-
 - (void)updateManuscript:(NSDictionary *)param success:(void (^)(id))success fail:(void (^)(NSError *))fail {
     if (param == nil) {
         return;
@@ -105,25 +85,6 @@
     [dataTask resume];
 }
 
-- (void)auditManuscriptWithToken:(NSString *)token status:(NSString *)status taskId:(int)taskId {
-    
-    if (token == nil || status <= 0 || taskId < 0) {
-        return;
-    }
-    
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithSessionConfiguration:configuration];
-    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
-    NSMutableDictionary *parameter = [NSMutableDictionary dictionary];
-    parameter[@"token"] = token;
-    parameter[@"status"] = status;
-    parameter[@"taskId"] = @(taskId);
-    
-    NSURLSessionDataTask *dataTask = [manager GET:kAuditManuscript parameters:parameter progress:nil success:nil failure:nil];
-    [dataTask resume];
-}
 
 - (void)auditManuscript:(NSDictionary *)param success:(void (^)(id))success fail:(void (^)(NSError *))fail {
     if (param == nil) {

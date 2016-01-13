@@ -226,7 +226,7 @@
             return;
         }
         
-        NSLog(@"%@",result);
+//        NSLog(@"%@",result);
         
         LTUserInfo *userInfo = [LTUserInfo userInfoWithDict:result[@"obj"]];
         [USERDEFAULT setInteger:userInfo.userId forKey:USERINFO_USERID];
